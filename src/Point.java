@@ -15,6 +15,7 @@ public class Point implements Comparable<Point> {
 
     private final int x;     // x-coordinate of this point
     private final int y;     // y-coordinate of this point
+    public final static Comparator<Point> NORM_COMPARATOR = new NormComparator();
 
     /**
      * Initializes a new point.
@@ -109,6 +110,14 @@ public class Point implements Comparable<Point> {
             if (slopeThisP1 < slopeThisP2) return -1;
             if (slopeThisP1 > slopeThisP2) return 1;
             return 0;
+        }
+    }
+
+    private  static class NormComparator implements  Comparator<Point> {
+
+        @Override
+        public int compare(Point o1, Point o2) {
+            return o1.compareTo(o2);
         }
     }
 
