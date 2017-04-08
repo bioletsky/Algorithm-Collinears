@@ -37,19 +37,23 @@ public class FastCollinearPoints {
         if (points.length <=3) return;
 
         Point [] otherPoints = new Point[points.length-1];
-        for (int i = 0; i < points.length; i++) {
+        for (int i = 0; i < points.length-3; i++) {
             //create array of slopes
             //sort in and search
-            for (int j = 0; j < points.length; j++) {
-                if (i == j) continue;
-                otherPoints[j < i ? j : j-1] = points[j];
-            }
-            Arrays.sort(otherPoints,points[i].slopeOrder());
-            int j1=0; //begin of equal token
-            for (int j = 1; j < otherPoints.length ; j++) {
-                if ((points[i].slopeTo(otherPoints[j]) != points[i].slopeTo(otherPoints[j1]))
-                        && ((j-j1+1) >= 4)) {
-                    addSeg( new LineSegment());
+            for (int j = i; j < otherPoints.length; j++)
+                otherPoints[j] = points[j+1];
+
+            Arrays.sort(otherPoints,i,otherPoints.length - 1, points[i].slopeOrder());
+            int j1=i; //begin of equal token
+            for (int j = i+1; j <= otherPoints.length ; j++) {
+                if (
+                     (j == otherPoints.length)
+                     ||
+                     (points[i].slopeTo(otherPoints[j]) != points[i].slopeTo(otherPoints[j1]))
+                    ) {
+                    if (j-j1+1 >= 4)
+                        addSeg( new LineSegment(points[i],otherPoints[j-1]));
+                    j1 = j;
                 }
             }
         }
