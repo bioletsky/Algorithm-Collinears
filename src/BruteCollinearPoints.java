@@ -13,11 +13,11 @@ public class BruteCollinearPoints {
 
 
     private  int numOfSeg = 0;
-    private LineSegment[] lineSeg = new LineSegment[0];
+    private LineSegment[] lineSeg = new LineSegment[1];
 
     private void addSeg (LineSegment seg) {
         if (lineSeg.length == numOfSeg) {
-            LineSegment[] newLineSeg = new LineSegment[numOfSeg+1];
+            LineSegment[] newLineSeg = new LineSegment[numOfSeg*2];
             for (int i = 0; i <= numOfSeg-1; i++) {
                 newLineSeg[i] = lineSeg[i];
             }
@@ -70,6 +70,13 @@ public class BruteCollinearPoints {
 
     public LineSegment[] segments()                // the line segments
     {
+        if (lineSeg.length != numOfSeg) {
+            LineSegment[] newLineSeg = new LineSegment[numOfSeg];
+            for (int i = 0; i <= numOfSeg-1; i++)
+                newLineSeg[i] = lineSeg[i];
+            lineSeg = newLineSeg;
+
+        }
         return lineSeg;
     }
 
